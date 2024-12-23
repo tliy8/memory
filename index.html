@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Greeting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    /* Basic Page Styling */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      color: white;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    /* Video Background */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Center Content */
+    #container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      z-index: 1;
+    }
+
+    /* Glowing Text */
+    #greeting {
+      font-size: 4rem;
+      text-shadow: 
+        0 0 5px #fff, 
+        0 0 10px #fff, 
+        0 0 20px #ff80b0, 
+        0 0 30px #ff80b0, 
+        0 0 40px #ff4d94, 
+        0 0 50px #ff4d94;
+      animation: sparkle 2s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      0% {
+        text-shadow:
+          0 0 5px #fff, 
+          0 0 10px #fff, 
+          0 0 15px #ff80b0, 
+          0 0 25px #ff80b0;
+      }
+      100% {
+        text-shadow: 
+          0 0 10px #fff, 
+          0 0 15px #fff, 
+          0 0 20px #ff4d94, 
+          0 0 30px #ff4d94;
+      }
+    }
+
+    /* Typing Text */
+    #typing-text {
+      font-size: 3rem;
+      margin-top: 20px;
+      color: #ffb3c1;
+    }
+
+    /* Button Styling */
+/* Button Styling */
+#next-page-btn {
+  margin-top: 40px;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  color: white;
+  background: linear-gradient(180deg, #ffffff, #fb9898, #ff0101);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 15px #ff4d94, 0 0 20px #ff80b0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#next-page-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #ff4d94, #ff80b0, #ff4d94);
+  box-shadow: 0 0 25px #ff4d94, 0 0 30px #ff80b0, 0 0 40px #fff;
+}
+
+
+    #next-page-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #ff4d94, 0 0 30px #ff80b0, 0 0 40px #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Video Background -->
+  <video id="background-video" autoplay muted loop>
+    <source src="./video/Golden Snowflakes .mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Greeting Container -->
+  <div id="container">
+    <div id="greeting">Merry Christmas, my dearest Li Juan! ✨</div>
+    <div id="typing-text"></div>
+    <button id="next-page-btn" onclick="navigateToNextPage()">不要按！</button>
+  </div>
+
+  <!-- Script for Typing Animation -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    const options = {
+      strings: ["Merry Christmas, little_pedas 🎄"],
+      typeSpeed: 80,
+      showCursor: false
+    };
+
+    const typed = new Typed("#typing-text", options);
+
+    /* Navigation Function */
+    function navigateToNextPage() {
+      window.location.href = "ct.html"; // Replace with the URL of your next page
+    }
+  </script>
+</body>
+</html>

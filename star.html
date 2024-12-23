@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Gallery with Starry Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, #001d3d, #000814); /* Deep blue to black gradient for night sky */
+            overflow: hidden;
+            height: 100vh;
+            color: white;
+        }
+
+        .starry-sky {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2; /* Place stars below all other content */
+        }
+
+        .star {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            perspective: 800px;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 70, 0.8));
+            overflow: hidden;
+            z-index: 1; /* Above the starry background */
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 0;
+        }
+
+        .wrap {
+            position: relative;
+            width: 120px;
+            height: 180px;
+            margin: auto;
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+
+        .wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1px;
+            border: 2px solid rgb(255, 163, 180);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="starry-sky"></div> <!-- Starry background -->
+    <div class="container">
+        <div class="wrap">
+            <img src="images/13.png" alt="">
+            <img src="images/2.jpg" alt="">
+            <img src="images/14.jpg" alt="">
+            <img src="images/4.jpg" alt="">
+            <img src="images/5.jpg" alt="">
+            <img src="images/6.jpg" alt="">
+            <img src="images/7.jpg" alt="">
+            <img src="images/8.jpg" alt="">
+            <img src="images/9.jpg" alt="">
+            <img src="images/10.jpg" alt="">
+            <img src="images/11.jpg" alt="">
+            <img src="images/12.jpg" alt="">
+        </div>
+    </div>
+    <script>
+        // Starry background script
+        const starrySky = document.querySelector('.starry-sky');
+        const totalStars = 300;
+
+        for (let i = 0; i < totalStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            const randomX = Math.random() * 100;
+            const randomY = Math.random() * 100;
+            const randomSize = Math.random() * 3 + 1;
+            const randomDelay = Math.random() * 5;
+
+            star.style.left = `${randomX}%`;
+            star.style.top = `${randomY}%`;
+            star.style.width = `${randomSize}px`;
+            star.style.height = `${randomSize}px`;
+            star.style.animationDelay = `${randomDelay}s`;
+
+            starrySky.appendChild(star);
+        }
+
+        // Love Gallery script
+        const container = document.querySelector('.container');
+        const wrap = document.querySelector('.wrap');
+        const imgList = document.querySelectorAll('.wrap img');
+        const length = imgList.length;
+        const angle = 360 / length;
+
+        setTimeout(() => {
+            for (let i = 0; i < length; i++) {
+                imgList[i].style.transition = 'transform 1s ease ' + (length - 1 - i) * 0.1 + 's';
+                imgList[i].style.transform = 'rotateY(' + (angle * i) + 'deg) translateZ(320px)';
+            }
+        }, 17);
+
+        const rotate = { x: -10, y: 0 };
+        wrap.style.transform = 'rotateX(' + rotate.x + 'deg)';
+
+        let isPointerDown = false;
+        let point = null;
+        let last = null;
+        let diff = null;
+        let rafId = null;
+
+        container.addEventListener('pointerdown', function (e) {
+            this.setPointerCapture(e.pointerId);
+            isPointerDown = true;
+            cancelAnimationFrame(rafId);
+            point = { x: e.clientX, y: e.clientY };
+            last = { x: e.clientX, y: e.clientY };
+            diff = { x: 0, y: 0 };
+        });
+
+        container.addEventListener('pointermove', function (e) {
+            if (isPointerDown) {
+                const current = { x: e.clientX, y: e.clientY };
+                diff = { x: current.x - last.x, y: current.y - last.y };
+                rotate.x -= diff.y * 0.1;
+                rotate.y += diff.x * 0.1;
+                last = { x: current.x, y: current.y };
+                wrap.style.transform = 'rotateX(' + rotate.x + 'deg) rotateY(' + rotate.y + 'deg)';
+            }
+        });
+
+        container.addEventListener('pointerup', function () {
+            isPointerDown = false;
+        });
+    </script>
+</body>
+</html>

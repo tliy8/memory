@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+            perspective: 800px;
+            background: url('images/sky.jpg') no-repeat center center/cover;
+            touch-action: none;
+            position: relative;
+        }
+        .wrap {
+            position: relative;
+            width: 120px;
+            height: 180px;
+            margin: auto;
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+        .wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1px;
+            border: 1px solid rgb(255, 244, 222); /* Gold frame */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Optional glow effect */
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .title {
+            position: absolute;
+            top: -100px; /* Start above the viewport */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%);
+            font-size: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-weight: bold;
+            color: #ffcbcb;
+            text-shadow: 0 0 10px rgba(255, 182, 193, 0.8), 0 0 20px rgba(255, 182, 193, 0.5);
+            animation: dropBounceFade 2.5s ease-out forwards;
+        }
+        @keyframes dropBounceFade {
+            0% {
+                top: -150px;
+                opacity: 0;
+                transform: translateX(-50%) scale(1.5);
+            }
+            50% {
+                top: 80px; /* Overshoot for a bounce effect */
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            70% {
+                top: 20px; /* Bounce back up slightly */
+            }
+            85% {
+                top: 40px; /* Slight rebound */
+            }
+            100% {
+                top: 20px; /* Settle in place */
+            }
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .toggle {
+            display: inline-block;
+        }
+        .toggle input {
+            display: none;
+        }
+        .toggle label {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="./song/love1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div class="container">
+        <div class="title">Our Love Journey</div>
+        <div class="wrap">
+            <img src="images/13.png" alt="">
+            <img src="images/2.jpg" alt="">
+            <img src="images/14.jpg" alt="">
+            <img src="images/4.jpg" alt="">
+            <img src="images/5.jpg" alt="">
+            <img src="images/6.jpg" alt="">
+            <img src="images/7.jpg" alt="">
+            <img src="images/8.jpg" alt="">
+            <img src="images/9.jpg" alt="">
+            <img src="images/10.jpg" alt="">
+            <img src="images/11.jpg" alt="">
+            <img src="images/12.jpg" alt="">
+        </div>
+    </div>
+    <div class="footer">
+      <p style="color: white;">Made with ❤️ by Tan Li Yang</p>
+      <div class="toggle">
+          <input type="checkbox" id="heart-check">
+          <label for="heart-check" id="heart">
+            <svg viewBox="0 0 24 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <path id="initial" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.777264,4 12.5417153,6.29330284 11.8189091,6.29330284 C11.0961029,6.29330284 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
+              <path id="stroke" fill="none" d="M11.8189091,20.3167303 C17.6981818,16.5505143 20.6378182,12.5122542 20.6378182,8.20195014 C20.6378182,5.99719437 18.8550242,4 16.3283829,4 C13.4628072,4 10.284995,6.64162063 10.284995,8.70392731 C10.284995,10.0731789 10.8851209,10.9874447 11.8189091,10.9874447 C12.7526973,10.9874447 13.3528232,10.0731789 13.3528232,8.70392731 C13.3528232,6.64162063 10.1317157,4 7.30943526,4 C4.90236126,4 3,5.64715533 3,8.20195014 C3,12.5122346 5.93963637,16.5504946 11.8189091,20.3167303 Z"></path>
+        
+        
+            </svg>
+          </label>
+      </div>
+  </div>
+  
+    <script>
+        // JavaScript for gallery remains unchanged
+        const container = document.querySelector('.container');
+        const wrap = document.querySelector('.wrap');
+        const imgList = document.querySelectorAll('.wrap img');
+        const length = imgList.length;
+        const angle = 360 / length;
+
+        setTimeout(() => {
+            for (let i = 0; i < length; i++) {
+                imgList[i].style.transition = 'transform 1s ease ' + (length - 1 - i) * 0.1 + 's';
+                imgList[i].style.transform = 'rotateY(' + (angle * i) + 'deg) translateZ(320px)';
+            }
+        }, 17);
+
+        const rotate = { x: -10, y: 0 };
+        wrap.style.transform = 'rotateX(' + rotate.x + 'deg)';
+
+        let isPointerDown = false;
+        let point = null;
+        let last = null;
+        let diff = null;
+        let rafId = null;
+
+        container.addEventListener('pointerdown', function (e) {
+            this.setPointerCapture(e.pointerId);
+            isPointerDown = true;
+            cancelAnimationFrame(rafId);
+            cancelAnimationFrame(autoRotateId);
+            point = { x: e.clientX, y: e.clientY };
+            last = { x: e.clientX, y: e.clientY };
+            diff = { x: 0, y: 0 };
+        });
+
+        container.addEventListener('pointermove', function (e) {
+            if (isPointerDown) {
+                const current = { x: e.clientX, y: e.clientY };
+                diff = { x: current.x - last.x, y: current.y - last.y };
+                rotate.x -= diff.y * 0.1;
+                rotate.y += diff.x * 0.1;
+                last = { x: current.x, y: current.y };
+                wrap.style.transform = 'rotateX(' + rotate.x + 'deg) rotateY(' + rotate.y + 'deg)';
+            }
+        });
+
+        container.addEventListener('pointerup', function () {
+            isPointerDown = false;
+            raf();
+            startAutoRotate();
+        });
+
+        container.addEventListener('pointercancel', function () {
+            isPointerDown = false;
+        });
+
+        function raf() {
+            let { x, y } = diff;
+            function step() {
+                x *= 0.95;
+                y *= 0.95;
+                rotate.x -= y * 0.1;
+                rotate.y += x * 0.05;
+                wrap.style.transform = 'rotateX(' + rotate.x + 'deg) rotateY(' + rotate.y + 'deg)';
+                if (Math.abs(x) > 1 || Math.abs(y) > 1) {
+                    rafId = requestAnimationFrame(step);
+                }
+            }
+            rafId = requestAnimationFrame(step);
+        }
+
+        let autoRotateId;
+        function autoRotate() {
+            rotate.y += 0.1;
+            wrap.style.transform = 'rotateX(' + rotate.x + 'deg) rotateY(' + rotate.y + 'deg)';
+            autoRotateId = requestAnimationFrame(autoRotate);
+        }
+
+        function startAutoRotate() {
+            cancelAnimationFrame(autoRotateId);
+            autoRotateId = requestAnimationFrame(autoRotate);
+        }
+
+        startAutoRotate();
+    </script>
+</body>
+</html>

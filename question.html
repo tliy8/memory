@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Am I?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff6f61;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #ff6f61;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff4e42;
+        }
+
+        .tips {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .tips:hover {
+            text-decoration: underline;
+        }
+
+        .counter {
+            margin-top: 15px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .popup img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .popup button {
+            background-color: #ff6f61;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background-color: #ff4e42;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Who Am I?</h1>
+        <p class="question">What is my nickname?</p>
+        <a href="#" class="tips" onclick="showHint()">Need a hint?</a>
+        <form id="quiz-form">
+            <div class="options">
+                <label><input type="radio" name="answer" value="name1"> 陈立洋</label>
+                <label><input type="radio" name="answer" value="name2"> 洋洋</label>
+                <label><input type="radio" name="answer" value="name3"> Goli</label>
+                <label><input type="radio" name="answer" value="name4"> 宝宝</label>
+                <label><input type="radio" name="answer" value="name5"> 肥洋</label>
+            </div>
+            <button type="button" onclick="checkAnswer()">Submit</button>
+        </form>
+        <p class="counter">莉琄请吃饭<span id="wrong-counter">0</span>次</p>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <img src="./images/16.jpg" alt="Wrong Answer">
+        <p>莉琄宝宝不对哟！</p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <div class="overlay" id="hint-overlay" onclick="closeHint()"></div>
+    <div class="popup" id="hint-popup">
+        <img src="./images/15.jpg" alt="Hint Image">
+        <p>不会蛤！打电话问我咯</p>
+        <button onclick="closeHint()">Close</button>
+    </div>
+
+    <script>
+        let wrongAttempts = 0;
+
+        function checkAnswer() {
+            const correctAnswer = "name3";
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+
+            if (!selectedOption) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            if (selectedOption.value === correctAnswer) {
+                window.location.href = "g.html"; // Replace with the actual URL for the next page
+            } else {
+                wrongAttempts++;
+                document.getElementById('wrong-counter').textContent = wrongAttempts;
+                showPopup();
+            }
+        }
+
+        function showHint() {
+            document.getElementById('hint-overlay').style.display = 'block';
+            document.getElementById('hint-popup').style.display = 'block';
+        }
+
+        function closeHint() {
+            document.getElementById('hint-overlay').style.display = 'none';
+            document.getElementById('hint-popup').style.display = 'none';
+        }
+
+        function showPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Christmas Tree</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+    #redeem-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #ff4d94;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="treeCanvas"></canvas>
+  <button id="redeem-btn" onclick="navigateToCountdown()">Redeem Gift 🎁</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Initialize Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#treeCanvas') });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Tree Geometry
+    const treeMaterial = new THREE.MeshStandardMaterial({ color: 'green' });
+    const cone = new THREE.ConeGeometry(3, 5, 32);
+    const tree = new THREE.Mesh(cone, treeMaterial);
+    tree.rotation.x = Math.PI / 3;
+    scene.add(tree);
+
+    // Lights
+    const light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(10, 10, 10);
+    scene.add(light);
+
+    camera.position.z = 10;
+
+    // Animation
+    function animate() {
+      requestAnimationFrame(animate);
+      tree.rotation.y += 0.01; // Spinning
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Navigate to Countdown
+    function navigateToCountdown() {
+      window.location.href = "countdown.html";
+    }
+  </script>
+</body>
+</html>

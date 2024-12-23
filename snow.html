@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Countdown with Snow Effect</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Background with Image */
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: url('images/christmas.png'); /* Your image path */
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Times New Roman', serif;
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    /* Countdown Timers */
+    .countdown-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    .timer {
+      background: linear-gradient(45deg, rgba(255, 160, 181, 0.8), rgba(145, 211, 255, 0.8)); /* Gradient */
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .timer:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Snowflake Effect */
+    .snowflake {
+      position: absolute;
+      top: -10%;
+      width: 30px;
+      height: 30px;
+      background-image: url("https://img.icons8.com/?size=100&id=7518&format=png&color=FFFFFF"); /* Snowflake image */
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: fall linear infinite, sway ease-in-out infinite;
+      z-index: 999; /* Ensure snowflakes are above other content */
+    }
+
+    @keyframes fall {
+      from {
+        top: -10%;
+      }
+      to {
+        top: 110%;
+      }
+    }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Message Button */
+    .message-button {
+      background: linear-gradient(45deg, #ff3b3b, #ff6b6b); /* Gradient */
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .message-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
+      transition: left 0.5s ease;
+    }
+
+    .message-button:hover {
+      background: linear-gradient(45deg, #e12d2d, #ff5151);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
+    .message-button:hover:before {
+      left: 0;
+    }
+
+    .message-box {
+      display: none; /* Hidden by default */
+      background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+      color: #ffffff;
+      font-size: 1.4rem;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .message-box p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Title -->
+  <h1>Countdown Christmas 🎅 & Our Love ❤️</h1>
+
+  <!-- Countdown Timers -->
+  <div class="countdown-container">
+    <div class="timer" id="christmas-timer">
+      🎄 Christmas Countdown: 
+      <span id="christmas-days"></span> Days
+    </div>
+
+    <div class="timer" id="love-timer">
+      Days Since Our First Day Together: <span id="love-days"></span>❤️ 
+    </div>
+  </div>
+
+  <!-- Message Button -->
+  <button class="message-button" onclick="redirectToGallery()">💌 Gift</button>
+
+  <!-- Message Box -->
+  <div class="message-box" id="message-box">
+    <p id="love-message"></p>
+  </div>
+
+  <!-- Snowflakes container -->
+  <div id="snowflakes"></div>
+
+  <!-- Audio Element -->
+  <audio id="background-audio" autoplay loop>
+    <source src="./song/Jingle Bells 3.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- JavaScript -->
+  <script>
+    // Function to redirect to g.html
+    function redirectToGallery() {
+      window.location.href = "question.html";
+    }
+
+    // Countdown to Christmas
+    function updateChristmasCountdown() {
+      const christmasDate = new Date(new Date().getFullYear(), 11, 25);
+      const today = new Date();
+      const diffTime = christmasDate - today;
+      const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById("christmas-days").innerText = daysLeft > 0 ? daysLeft : "It's Christmas 🎅!";
+    }
+
+    // Countdown Since First Day Together
+    function updateLoveCountdown() {
+      const firstDay = new Date("2024-10-02"); // Update this to your actual first day
+      const today = new Date();
+      const diffTime = today - firstDay;
+      const daysTogether = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById("love-days").innerText = daysTogether;
+    }
+
+    // Snowflake Effect
+    const snowflakeCount = 100; // Number of snowflakes
+    const container = document.getElementById('snowflakes');
+
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+      snowflake.style.animationDuration = Math.random() * 3 + 3 + 's'; // Random fall speed
+      snowflake.style.animationDelay = Math.random() * 5 + 's'; // Random start delay
+      snowflake.style.opacity = Math.random(); // Random opacity
+      snowflake.style.width = snowflake.style.height = Math.random() * 50 + 20 + 'px'; // Random size
+      container.appendChild(snowflake);
+
+      // Remove snowflake after animation ends
+      snowflake.addEventListener('animationend', () => snowflake.remove());
+    }
+
+    setInterval(() => {
+      if (container.childElementCount < snowflakeCount) {
+        createSnowflake();
+      }
+    }, 300); // Adjust for more/less frequent snowflakes
+
+    // Initialize countdowns
+    updateChristmasCountdown();
+    updateLoveCountdown();
+  </script>
+</body>
+</html>
